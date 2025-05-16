@@ -1,0 +1,84 @@
+.list-upload-form-card {
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+}
+
+.list-upload-form-card h3 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+/* Reusing .form-group, .error-message, .success-message from AgentForms.css if they are suitable */
+/* Or define/override here if needed */
+
+.form-group input[type="file"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+  /* Consider custom styling for file input for better appearance */
+}
+
+.form-group input[type="file"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.15rem rgba(0, 123, 255, 0.2);
+    outline: none;
+}
+
+.file-info {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 8px;
+  text-align: left;
+}
+
+.upload-button {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-weight: 500;
+  /* Inherits global button styles from index.css or can be styled specifically */
+  background-color: #28a745; /* Green for upload actions */
+  border-color: #28a745;
+}
+
+.upload-button:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.upload-button:disabled {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Ensure error and success messages are styled (can be shared) */
+.error-message {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.success-message {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 0.9rem;
+} 

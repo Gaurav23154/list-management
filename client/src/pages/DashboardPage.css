@@ -1,0 +1,76 @@
+.dashboard-container {
+  padding: 20px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.dashboard-header p {
+  margin: 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.logout-button {
+  /* Using global button styles from index.css */
+  background-color: #dc3545; /* Bootstrap danger red */
+  padding: 8px 15px;
+  font-size: 0.9rem;
+}
+
+.logout-button:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
+
+.dashboard-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f9f9f9; /* Slightly different background for sections */
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.dashboard-section h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 1.4rem;
+  color: #444;
+}
+
+/* Specific section styling if needed */
+.agent-management-section {
+  /* Custom styles for agent management section */
+}
+
+.list-upload-section {
+  /* Custom styles for list upload section */
+}
+
+.distributed-lists-section {
+  /* Custom styles for distributed lists section */
+}
+
+/* Ensure error messages within dashboard sections are styled if not globally covered */
+.dashboard-section .error-message {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+} 

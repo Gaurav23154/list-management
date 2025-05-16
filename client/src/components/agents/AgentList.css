@@ -1,0 +1,68 @@
+.agent-list-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+}
+
+.agent-list-container h3 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.agent-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.agent-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s ease;
+}
+
+.agent-list-item:last-child {
+  border-bottom: none;
+}
+
+.agent-list-item:hover {
+  background-color: #f9f9f9;
+}
+
+.agent-info {
+  flex-grow: 1;
+}
+
+.agent-info strong {
+  color: #0056b3;
+  font-size: 1.05rem;
+}
+
+.agent-contact {
+  color: #555;
+  font-size: 0.9rem;
+  margin-left: 20px; /* Space between info and contact */
+  min-width: 120px; /* Give some space for mobile number */
+  text-align: right;
+}
+
+/* Styles for error messages or loading can be inherited or defined here */
+.error-message {
+  /* Copied from AgentForms.css for consistency if not global */
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 10px 0;
+  text-align: center;
+  font-size: 0.9rem;
+} 

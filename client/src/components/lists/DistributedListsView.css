@@ -1,0 +1,67 @@
+.distributed-lists-container {
+  margin-top: 15px;
+}
+
+.agent-tasks-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.07);
+  margin-bottom: 25px;
+}
+
+.agent-tasks-card h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #0056b3; /* Dark blue for agent name */
+  font-size: 1.3rem;
+  border-bottom: 1px solid #eef;
+  padding-bottom: 8px;
+}
+
+.file-origin-info {
+    font-size: 0.8rem;
+    color: #777;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.tasks-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.tasks-table th,
+.tasks-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.tasks-table th {
+  background-color: #f2f2f2;
+  font-weight: 600;
+  color: #333;
+}
+
+.tasks-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.tasks-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Error message styling (can be inherited or defined if specific styling needed here) */
+.distributed-lists-container .error-message {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  text-align: center;
+} 
