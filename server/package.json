@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "cd ../client && npm install && npm run build",
+    "build": "cd ../client && npm install && npm install -g vite && npm run build",
     "heroku-postbuild": "npm run build"
   },
   "engines": {

@@ -16,7 +16,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "terser": "^5.39.2",
     "vite": "^5.0.0",
-    "vite-plugin-compression2": "^1.3.3"
+    "vite-plugin-compression2": "^0.11.0"
   },
   "scripts": {
     "dev": "vite",
