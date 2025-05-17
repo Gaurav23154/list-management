@@ -1,0 +1,158 @@
+.dashboard {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard h1 {
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h3 {
+  color: #666;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.insights-section {
+  margin-bottom: 2rem;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.insight-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.insight-card h3 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.insight-card p {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.insight-date {
+  font-size: 0.875rem;
+  color: #999;
+}
+
+.recent-activity {
+  margin-bottom: 2rem;
+}
+
+.activity-list {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-item .date {
+  color: #666;
+}
+
+.activity-item .count {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.status-section {
+  margin-bottom: 2rem;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.status-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.status-card h3 {
+  color: #666;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.status-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.dashboard-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.dashboard-error {
+  background: #fee;
+  color: #c00;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 1rem;
+  }
+
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+} 

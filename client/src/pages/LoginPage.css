@@ -1,73 +1,154 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
 .login-page-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80vh; /* Adjust based on your header/footer height */
+  min-height: 100vh;
+  width: 100vw;
   padding: 20px;
+  background-color: #f8f9fa;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .login-form-card {
   background-color: #fff;
-  padding: 30px 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
+  margin: 20px;
 }
 
 .login-form-card h2 {
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   color: #333;
-  font-size: 1.8rem;
+  font-size: 2rem;
+  font-weight: 600;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  width: 100%;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #555;
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #444;
   text-align: left;
+  font-size: 1rem;
 }
 
 .form-group input {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 14px;
+  border: 2px solid #e1e1e1;
+  border-radius: 8px;
   font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
 .form-group input:focus {
   outline: none;
   border-color: #007bff;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
 }
 
 .error-message {
-  color: #dc3545; /* Bootstrap danger color */
+  color: #dc3545;
   background-color: #f8d7da;
   border: 1px solid #f5c6cb;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 20px;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 24px;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  width: 100%;
 }
 
 .login-button {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   font-size: 1.1rem;
   font-weight: 600;
-  /* Uses global button styles from index.css by default for background and color */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
 }
 
 .login-button:disabled {
-  background-color: #6c757d; /* Bootstrap secondary color for disabled state */
+  background-color: #6c757d;
   cursor: not-allowed;
+}
+
+.login-link {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 1rem;
+  color: #666;
+  width: 100%;
+}
+
+.login-link a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 5px;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 600px) {
+  .login-form-card {
+    margin: 10px;
+    padding: 20px;
+  }
+
+  .login-form-card h2 {
+    font-size: 1.75rem;
+  }
+
+  .form-group input {
+    padding: 12px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .login-form-card {
+    margin: 5px;
+    padding: 15px;
+  }
+
+  .login-form-card h2 {
+    font-size: 1.5rem;
+  }
 } 

@@ -1,75 +1,113 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api'; // Adjust if your backend runs elsewhere
+const API_URL = 'http://localhost:5001/api';
 
-const authService = {
-  // Admin Login
-  login: async (credentials) => {
-    try {
-      const response = await axios.post(`${API_URL}/auth/login`, credentials);
-      if (response.data.token) {
-        localStorage.setItem('adminToken', response.data.token);
-        // You might want to set axios default headers here if you plan to make authenticated requests frequently
-        // axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-      }
-      return response.data;
-    } catch (error) {
-      // Handle or throw error to be caught by the calling component
-      console.error('Login service error:', error.response?.data || error.message);
-      throw error.response?.data || new Error('Login failed');
-    }
-  },
-
-  // Admin Logout
-  logout: () => {
-    localStorage.removeItem('adminToken');
-    // Remove axios default header if it was set
-    // delete axios.defaults.headers.common['Authorization'];
-    // Potentially notify other parts of the app or redirect
-  },
-
-  // Get current admin (if needed, e.g., to verify token or get admin details)
-  getCurrentAdmin: async () => {
-    const token = localStorage.getItem('adminToken');
-    if (!token) {
-      return null;
-    }
-    try {
-      const response = await axios.get(`${API_URL}/auth`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Get current admin error:', error.response?.data || error.message);
-      // Token might be invalid or expired, so clear it
-      localStorage.removeItem('adminToken');
-      return null;
-    }
-  },
-
-  // Check if admin is currently authenticated (basic check)
-  isAuthenticated: () => {
-    return !!localStorage.getItem('adminToken');
+// Create axios instance with default config
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json'
   }
+});
 
-  // Admin Registration (if you want to expose it via UI, otherwise can be a one-time script or seeded)
-  /* 
-  register: async (adminData) => {
-    try {
-      const response = await axios.post(`${API_URL}/auth/register`, adminData);
-      // Handle successful registration (e.g., auto-login or message)
-      if (response.data.token) {
-        localStorage.setItem('adminToken', response.data.token);
-      }
-      return response.data;
-    } catch (error) {
-      console.error('Registration service error:', error.response?.data || error.message);
-      throw error.response?.data || new Error('Registration failed');
+// Add request interceptor to add token to all requests
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-  */
+);
+
+// Add response interceptor to handle token expiration
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Clear token and redirect to login only if we're not already on the login page
+      if (!window.location.pathname.includes('/login')) {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+// Health check function
+export const checkServerHealth = async () => {
+  try {
+    const response = await api.get('/health');
+    return response.data.status === 'ok';
+  } catch (error) {
+    console.error('Health check failed:', error);
+    return false;
+  }
 };
 
-export default authService; 
+export const register = async (userData) => {
+  try {
+    const response = await api.post('/auth/register', userData);
+    if (response.data.token) {
+      localStorage.setItem('token', response.data.token);
+    }
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Registration failed' };
+  }
+};
+
+export const login = async (credentials) => {
+  try {
+    const response = await api.post('/auth/login', credentials);
+    if (response.data.token) {
+      localStorage.setItem('token', response.data.token);
+    }
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Login failed' };
+  }
+};
+
+export const logout = () => {
+  localStorage.removeItem('token');
+  window.location.href = '/login';
+};
+
+export const getCurrentUser = async () => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No token found');
+    }
+    const response = await api.get('/auth/me');
+    return response.data;
+  } catch (error) {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+    }
+    throw error.response?.data || { message: 'Failed to get user data' };
+  }
+};
+
+export const isAuthenticated = () => {
+  return !!localStorage.getItem('token');
+};
+
+export const getAuthHeader = () => {
+  const token = localStorage.getItem('token');
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
+export default {
+  register,
+  login,
+  logout,
+  getCurrentUser,
+  isAuthenticated
+}; 

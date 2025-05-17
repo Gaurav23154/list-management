@@ -1,20 +1,21 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+const API_URL = 'http://localhost:5001/api';
 
-// Function to get the auth token from localStorage
-const getAuthToken = () => {
-  return localStorage.getItem('adminToken');
-};
+// Create axios instance with default config
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
 
-// Create an axios instance for authenticated requests
-const axiosAuth = axios.create();
-
-axiosAuth.interceptors.request.use(
+// Add request interceptor to add token to all requests
+api.interceptors.request.use(
   (config) => {
-    const token = getAuthToken();
+    const token = localStorage.getItem('token');
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
@@ -23,61 +24,72 @@ axiosAuth.interceptors.request.use(
   }
 );
 
-const agentService = {
-  // Create a new agent
-  createAgent: async (agentData) => {
-    try {
-      const response = await axiosAuth.post(`${API_URL}/agents`, agentData);
-      return response.data;
-    } catch (error) {
-      console.error('Create agent service error:', error.response?.data || error.message);
-      throw error.response?.data || new Error('Failed to create agent');
-    }
-  },
-
-  // Get all agents
-  getAllAgents: async () => {
-    try {
-      const response = await axiosAuth.get(`${API_URL}/agents`);
-      return response.data;
-    } catch (error) {
-      console.error('Get all agents service error:', error.response?.data || error.message);
-      throw error.response?.data || new Error('Failed to fetch agents');
-    }
-  },
-
-  // Get a single agent by ID (optional, if needed for an edit page later)
-  getAgentById: async (agentId) => {
-    try {
-      const response = await axiosAuth.get(`${API_URL}/agents/${agentId}`);
-      return response.data;
-    } catch (error) {
-      console.error(`Get agent by ID (${agentId}) service error:`, error.response?.data || error.message);
-      throw error.response?.data || new Error('Failed to fetch agent details');
-    }
-  },
-
-  // Update an agent (optional, if needed for an edit page later)
-  updateAgent: async (agentId, agentData) => {
-    try {
-      const response = await axiosAuth.put(`${API_URL}/agents/${agentId}`, agentData);
-      return response.data;
-    } catch (error) {
-      console.error(`Update agent (${agentId}) service error:`, error.response?.data || error.message);
-      throw error.response?.data || new Error('Failed to update agent');
-    }
-  },
-
-  // Delete an agent (optional, if needed)
-  deleteAgent: async (agentId) => {
-    try {
-      const response = await axiosAuth.delete(`${API_URL}/agents/${agentId}`);
-      return response.data;
-    } catch (error) {
-      console.error(`Delete agent (${agentId}) service error:`, error.response?.data || error.message);
-      throw error.response?.data || new Error('Failed to delete agent');
-    }
+// Get all agents
+const getAgents = async () => {
+  try {
+    const response = await api.get('/agents');
+    console.log('Get agents response:', response.data);
+    // Return the data array from the response
+    return response.data.data || [];
+  } catch (error) {
+    console.error('Get agents error:', error);
+    throw error.response?.data || { message: 'Failed to fetch agents' };
   }
 };
 
-export default agentService; 
+// Get agent by ID
+const getAgentById = async (id) => {
+  try {
+    const response = await api.get(`/agents/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Failed to fetch agent' };
+  }
+};
+
+// Create a new agent
+const createAgent = async (agentData) => {
+  try {
+    console.log('Sending agent data to server:', agentData);
+    const response = await api.post('/agents', agentData);
+    console.log('Server response:', response.data);
+    
+    if (!response.data.success) {
+      throw new Error(response.data.message || 'Failed to create agent');
+    }
+    
+    return response.data;
+  } catch (error) {
+    console.error('Create agent error:', error);
+    throw error.response?.data || { message: error.message || 'Failed to create agent' };
+  }
+};
+
+// Update an existing agent
+const updateAgent = async (id, agentData) => {
+  try {
+    const response = await api.put(`/agents/${id}`, agentData);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Failed to update agent' };
+  }
+};
+
+// Delete an agent
+const deleteAgent = async (id) => {
+  try {
+    const response = await api.delete(`/agents/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Failed to delete agent' };
+  }
+};
+
+// Export all functions
+export {
+  getAgents,
+  getAgentById,
+  createAgent,
+  updateAgent,
+  deleteAgent
+}; 

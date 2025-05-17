@@ -1,65 +1,91 @@
 import React from 'react';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import './App.css';
-// import authService from './services/authService'; // No longer needed here directly
-import { useAuth } from './context/AuthContext.jsx'; // Import useAuth
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
+import Login from './components/Login';
+import Register from './components/Register';
+import Dashboard from './components/Dashboard';
+import Agents from './components/Agents';
+import Upload from './components/Upload';
+import Contacts from './components/Contacts';
+import Navbar from './components/Navbar';
 
-// Page Components
-import LoginPage from './pages/LoginPage';
-import DashboardPage from './pages/DashboardPage';
-
-// ProtectedRoute Component using AuthContext
+// Protected Route component
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, loadingAuth } = useAuth();
-  const location = useLocation();
+  const { user, loading } = useAuth();
 
-  if (loadingAuth) {
-    return <div>Loading...</div>; // Or a spinner component
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+  if (!user) {
+    return <Navigate to="/login" />;
   }
+
   return children;
 };
 
-function App() {
-  const { isAuthenticated, loadingAuth } = useAuth();
+// Public Route component (redirects to dashboard if already logged in)
+const PublicRoute = ({ children }) => {
+  const { user, loading } = useAuth();
 
-  if (loadingAuth) {
-    // ನೀವು ಅಪ್ಲಿಕೇಶನ್‌ನ ಮುಖ್ಯ ವಿಷಯವನ್ನು ನಿರೂಪಿಸಲು ಪ್ರಯತ್ನಿಸುವ ಮೊದಲು ಲೋಡ್ ಆಗುವುದನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಲು ಬಯಸಬಹುದು
-    // ನೀವು ಇಲ್ಲಿ ಜಾಗತಿಕ ಲೋಡರ್ ಅನ್ನು ಹೊಂದಬಹುದು.
-    return <div className="app-loading">Initializing Application...</div>;
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
+  if (user) {
+    return <Navigate to="/dashboard" />;
+  }
+
+  return children;
+};
+
+const AppRoutes = () => {
   return (
-    // Router is now in main.jsx
-    <div className="App">
-      <header className="App-header">
-        <h1>MERN App Dashboard (Vite)</h1>
-      </header>
-      <main>
-        <Routes>
-          <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />} />
-          <Route 
-            path="/dashboard/*" 
-            element={
-              <ProtectedRoute>
-                <DashboardPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route 
-            path="/"
-            element={
-              isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />
-            }
-          />
-          <Route path="*" element={<div>404 Not Found</div>} />
-        </Routes>
+    <Routes>
+      <Route path="/login" element={
+        <PublicRoute>
+          <Login />
+        </PublicRoute>
+      } />
+      <Route path="/register" element={
+        <PublicRoute>
+          <Register />
+        </PublicRoute>
+      } />
+      <Route path="/dashboard" element={
+        <ProtectedRoute>
+          <Dashboard />
+        </ProtectedRoute>
+      } />
+      <Route path="/agents" element={
+        <ProtectedRoute>
+          <Agents />
+        </ProtectedRoute>
+      } />
+      <Route path="/contacts" element={
+        <ProtectedRoute>
+          <Contacts />
+        </ProtectedRoute>
+      } />
+      <Route path="/upload" element={
+        <ProtectedRoute>
+          <Upload />
+        </ProtectedRoute>
+      } />
+      <Route path="/" element={<Navigate to="/dashboard" />} />
+    </Routes>
+  );
+};
+
+const App = () => {
+  return (
+    <div className="app">
+      <Navbar />
+      <main className="container">
+        <AppRoutes />
       </main>
     </div>
   );
-}
+};
 
 export default App;

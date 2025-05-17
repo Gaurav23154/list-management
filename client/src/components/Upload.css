@@ -1,0 +1,148 @@
+.upload-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.upload-container h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.upload-box {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.upload-instructions {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.upload-instructions h2 {
+  color: #333;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.upload-instructions ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.upload-instructions li {
+  margin: 0.5rem 0;
+  color: #666;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.file-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.file-input-container input[type="file"] {
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.file-input-label {
+  display: block;
+  padding: 1rem;
+  background: #f8f9fa;
+  border: 2px dashed #dee2e6;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.file-input-label:hover {
+  background: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.upload-progress {
+  width: 100%;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #007bff;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  display: block;
+  text-align: center;
+  margin-top: 0.5rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.upload-button {
+  padding: 0.75rem 1.5rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.upload-button:hover:not(:disabled) {
+  background: #0056b3;
+}
+
+.upload-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  padding: 1rem;
+  background: #f8d7da;
+  color: #721c24;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.success-message {
+  padding: 1rem;
+  background: #d4edda;
+  color: #155724;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+  .upload-box {
+    padding: 1rem;
+  }
+  
+  .upload-container h1 {
+    font-size: 1.5rem;
+  }
+} 

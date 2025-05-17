@@ -90,6 +90,9 @@ const LoginPage = () => {
           <button type="submit" className="login-button" disabled={loading || loadingAuth}>
             {loading ? 'Logging in...' : 'Login'}
           </button>
+          <p className="login-link">
+            Don't have an account? <a href="/signup">Sign up here</a>
+          </p>
         </form>
       </div>
     </div>

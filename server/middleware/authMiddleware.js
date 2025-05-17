@@ -1,36 +1,62 @@
 const jwt = require('jsonwebtoken');
-const Admin = require('../models/Admin'); // Or User model if it's a general auth middleware
+const User = require('../models/User');
 
-const authMiddleware = async (req, res, next) => {
-  let token;
+exports.protect = async (req, res, next) => {
+  try {
+    let token;
 
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    try {
-      // Get token from header
+    // Check if token exists in headers
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
       token = req.headers.authorization.split(' ')[1];
+    }
 
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: 'No token provided'
+      });
+    }
+
+    try {
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      // Get admin from the token (or user)
-      // Ensure the user/admin still exists and is valid
-      req.admin = await Admin.findById(decoded.admin.id).select('-password'); 
-      // If using for general users, it would be req.user = await User.findById(decoded.user.id).select('-password');
-
-      if (!req.admin) {
-        return res.status(401).json({ msg: 'Not authorized, admin not found' });
+      // Get user from token
+      const user = await User.findById(decoded.id).select('-password');
+      if (!user) {
+        return res.status(401).json({
+          success: false,
+          message: 'User not found'
+        });
       }
 
+      // Add user to request object
+      req.user = user;
       next();
     } catch (error) {
-      console.error('Token verification error:', error);
-      res.status(401).json({ msg: 'Not authorized, token failed' });
+      if (error.name === 'JsonWebTokenError') {
+        return res.status(401).json({
+          success: false,
+          message: 'Invalid token'
+        });
+      }
+      if (error.name === 'TokenExpiredError') {
+        return res.status(401).json({
+          success: false,
+          message: 'Token expired'
+        });
+      }
+      return res.status(401).json({
+        success: false,
+        message: 'Not authorized to access this route'
+      });
     }
+  } catch (error) {
+    console.error('Auth middleware error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error in authentication',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
-
-  if (!token) {
-    res.status(401).json({ msg: 'Not authorized, no token' });
-  }
-};
-
-module.exports = authMiddleware; 
+}; 

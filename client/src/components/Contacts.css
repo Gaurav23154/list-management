@@ -1,0 +1,118 @@
+.contacts {
+  padding: 20px;
+}
+
+.contacts h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
+
+.contact-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.2s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.contact-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.contact-header h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.2rem;
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.status.active {
+  background-color: #e3fcef;
+  color: #00a854;
+}
+
+.status.inactive {
+  background-color: #fff1f0;
+  color: #f5222d;
+}
+
+.status.pending {
+  background-color: #fff7e6;
+  color: #fa8c16;
+}
+
+.contact-details {
+  color: #666;
+}
+
+.contact-details p {
+  margin: 8px 0;
+  line-height: 1.4;
+}
+
+.contact-details strong {
+  color: #333;
+  margin-right: 5px;
+}
+
+.date-added {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.error {
+  text-align: center;
+  padding: 40px;
+  color: #f5222d;
+  font-size: 1.1rem;
+}
+
+.no-contacts {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.no-contacts h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .contacts-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-card {
+    margin: 10px 0;
+  }
+} 

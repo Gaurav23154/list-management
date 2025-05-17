@@ -1,0 +1,149 @@
+.ai-insights {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ai-insights h2 {
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.insight-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.insight-card:hover {
+  transform: translateY(-5px);
+}
+
+.insight-card h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.insight-card p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.insight-action {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: #3498db;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background 0.2s ease;
+}
+
+.insight-action:hover {
+  background: #2980b9;
+}
+
+/* Insight type specific styles */
+.insight-card.pattern {
+  border-left: 4px solid #e74c3c;
+}
+
+.insight-card.trend {
+  border-left: 4px solid #2ecc71;
+}
+
+.insight-card.recommendation {
+  border-left: 4px solid #f1c40f;
+}
+
+.insight-card.default {
+  border-left: 4px solid #95a5a6;
+}
+
+.insights-loading {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-size: 1.1rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+  margin: 1rem 0;
+}
+
+.insights-error {
+  text-align: center;
+  padding: 2rem;
+  color: #e74c3c;
+  background: #fde8e8;
+  border-radius: 10px;
+  margin: 1rem 0;
+  font-size: 1.1rem;
+}
+
+.insights-error h3 {
+  color: #c53030;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.insights-error p {
+  margin-bottom: 1.5rem;
+}
+
+.retry-button {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s ease;
+}
+
+.retry-button:hover {
+  background: #c53030;
+}
+
+.insights-empty {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  background: #f8f9fa;
+  border-radius: 10px;
+  margin: 1rem 0;
+  font-size: 1.1rem;
+}
+
+.insights-empty h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.insights-empty p {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .ai-insights {
+    padding: 1rem;
+  }
+
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+} 

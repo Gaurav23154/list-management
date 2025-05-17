@@ -1,0 +1,11 @@
+Name,Email,Phone,Department,Role
+John Doe,john.doe@example.com,555-0123,Engineering,Senior Developer
+Jane Smith,jane.smith@example.com,555-0124,Marketing,Marketing Manager
+Mike Johnson,mike.j@example.com,555-0125,Sales,Sales Representative
+Sarah Williams,sarah.w@example.com,555-0126,HR,HR Specialist
+David Brown,david.b@example.com,555-0127,Finance,Financial Analyst
+Lisa Davis,lisa.d@example.com,555-0128,Engineering,QA Engineer
+Tom Wilson,tom.w@example.com,555-0129,IT,Systems Administrator
+Emma Taylor,emma.t@example.com,555-0130,Marketing,Content Writer
+James Anderson,james.a@example.com,555-0131,Sales,Sales Manager
+Maria Garcia,maria.g@example.com,555-0132,HR,Recruiter 

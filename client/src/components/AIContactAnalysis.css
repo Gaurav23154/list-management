@@ -1,0 +1,97 @@
+.ai-analysis {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.ai-analysis h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.insight-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: flex-start;
+  transition: transform 0.2s ease;
+}
+
+.insight-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.insight-icon {
+  font-size: 2rem;
+  margin-right: 15px;
+  min-width: 40px;
+  text-align: center;
+}
+
+.insight-content {
+  flex: 1;
+}
+
+.insight-content h3 {
+  color: #2c3e50;
+  margin: 0 0 10px 0;
+  font-size: 1.1rem;
+}
+
+.insight-content p {
+  color: #666;
+  margin: 0 0 15px 0;
+  line-height: 1.5;
+}
+
+.action-button {
+  background: #1890ff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.action-button:hover {
+  background: #40a9ff;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.error {
+  text-align: center;
+  padding: 20px;
+  color: #f5222d;
+  background: #fff1f0;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+@media (max-width: 768px) {
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .insight-card {
+    margin: 10px 0;
+  }
+} 

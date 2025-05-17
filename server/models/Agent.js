@@ -1,48 +1,67 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const AgentSchema = new mongoose.Schema({
+const agentSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Please provide a name']
+    required: true,
+    trim: true
   },
   email: {
     type: String,
-    required: [true, 'Please provide an email'],
+    required: true,
     unique: true,
-    match: [
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      'Please provide a valid email'
-    ]
+    trim: true,
+    lowercase: true
   },
-  mobileNumber: {
+  phone: {
     type: String,
-    required: [true, 'Please provide a mobile number'],
-    // Add any specific validation for mobile number with country code if needed
+    required: true,
+    trim: true
+  },
+  status: {
+    type: String,
+    enum: ['active', 'inactive'],
+    default: 'active'
+  },
+  notes: {
+    type: String,
+    trim: true
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
   password: {
     type: String,
-    required: [true, 'Please provide a password'],
     minlength: 6,
     select: false // Do not return password by default
   }
-}, { timestamps: true });
+}, {
+  timestamps: true
+});
 
-// Hash password before saving
-AgentSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) {
-    next();
+// Hash password before saving if it exists
+agentSchema.pre('save', async function(next) {
+  if (!this.isModified('password') || !this.password) {
+    return next();
   }
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 // Method to compare entered password with hashed password in database
 // Note: Agents might not need to log in directly based on requirements, 
 // but password matching can be useful for other purposes or future enhancements.
-AgentSchema.methods.matchPassword = async function(enteredPassword) {
+agentSchema.methods.matchPassword = async function(enteredPassword) {
+  if (!this.password) return false;
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-module.exports = mongoose.model('Agent', AgentSchema); 
+module.exports = mongoose.model('Agent', agentSchema); 
