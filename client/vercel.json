@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://contact-management-backend.vercel.app/api/:path*"
+      "destination": "https://list-management-roan.vercel.app/api/:path*"
     }
   ],
   "buildCommand": "npm run build",
