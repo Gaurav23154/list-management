@@ -42,11 +42,17 @@ const limiter = rateLimit({
   max: 100, // Limit each IP to 100 requests per windowMs
   message: 'Too many requests from this IP, please try again later.'
 });
+
+app.get('/', (req, res) => {
+  res.send('Welcome to the backend server!');
+});
+
+
 app.use('/api/', limiter);
 
 // CORS configuration
 const allowedOrigins = process.env.NODE_ENV === 'production' 
-  ? [process.env.VITE_API_URL?.replace('/api', '')] 
+  ? [process.env.VITE_API_URL?.replace('/api', ''), 'https://your-render-app.onrender.com'] 
   : ['http://localhost:5173', 'http://127.0.0.1:5173'];
 
 app.use(cors({
@@ -87,6 +93,8 @@ app.get('/api/health', (req, res) => {
     uptime: process.uptime()
   });
 });
+
+
 
 // API Routes
 app.use('/api/auth', authRoutes);
@@ -151,11 +159,32 @@ const connectWithRetry = async () => {
       
       // Start server after successful database connection
       const PORT = process.env.PORT || 5001;
-      app.listen(PORT, '0.0.0.0', () => {
+      const server = app.listen(PORT, '0.0.0.0', () => {
         console.log(`Server is running on port ${PORT}`);
         console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
         console.log(`API URL: http://localhost:${PORT}/api`);
+      }).on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+          console.error(`Port ${PORT} is already in use. Please try a different port or kill the process using this port.`);
+          process.exit(1);
+        } else {
+          console.error('Server error:', err);
+          process.exit(1);
+        }
       });
+
+      // Handle graceful shutdown
+      process.on('SIGTERM', () => {
+        console.log('SIGTERM received. Shutting down gracefully...');
+        server.close(() => {
+          console.log('Server closed');
+          mongoose.connection.close(false, () => {
+            console.log('MongoDB connection closed');
+            process.exit(0);
+          });
+        });
+      });
+
     } catch (error) {
       console.error('MongoDB connection error:', error);
       if (retries < maxRetries) {
