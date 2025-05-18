@@ -52,7 +52,7 @@ app.use('/api/', limiter);
 
 // CORS configuration
 const allowedOrigins = process.env.NODE_ENV === 'production' 
-  ? [process.env.VITE_API_URL?.replace('/api', ''), 'https://your-render-app.onrender.com'] 
+  ? [process.env.VITE_API_URL?.replace('/api', '')] 
   : ['http://localhost:5173', 'http://127.0.0.1:5173'];
 
 app.use(cors({
