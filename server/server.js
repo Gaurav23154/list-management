@@ -7,6 +7,7 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const compression = require('compression');
 const mongoSanitize = require('express-mongo-sanitize');
+const fs = require('fs');
 
 // Load environment variables
 dotenv.config();
@@ -97,12 +98,29 @@ app.use('/api/ai', aiRoutes);
 
 // Serve static files from the React app in production
 if (process.env.NODE_ENV === 'production') {
+  // Get the absolute path to the client build directory
+  const clientBuildPath = path.join(__dirname, '..', 'client', 'dist');
+  
+  // Check if the build directory exists
+  if (!fs.existsSync(clientBuildPath)) {
+    console.error('Client build directory not found at:', clientBuildPath);
+    console.error('Please ensure you have run "npm run build" in the client directory');
+  }
+
   // Serve static files from the React app
-  app.use(express.static(path.join(__dirname, '../client/dist')));
+  app.use(express.static(clientBuildPath));
 
   // Handle React routing, return all requests to React app
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+    const indexPath = path.join(clientBuildPath, 'index.html');
+    if (fs.existsSync(indexPath)) {
+      res.sendFile(indexPath);
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'Client build files not found. Please ensure the client has been built.'
+      });
+    }
   });
 }
 
