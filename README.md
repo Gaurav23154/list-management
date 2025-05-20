@@ -70,6 +70,7 @@ npm install
 MONGODB_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 PORT=5001
+OpenAIKey=yourkeyhere
 ```
 
 5. Start the development servers:
