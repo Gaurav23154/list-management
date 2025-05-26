@@ -15,8 +15,9 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: process.env.NODE_ENV === 'production' ? 'https://your-render-app.onrender.com' : 'http://localhost:5001',
+        target: 'http://13.51.150.158:5001',
         changeOrigin: true,
+        secure: false
       }
     }
   },
