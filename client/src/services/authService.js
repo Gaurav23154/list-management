@@ -1,13 +1,14 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+const API_URL = 'http://13.51.150.158:5001/api';
 
 // Create axios instance with default config
 const api = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json'
-  }
+  },
+  withCredentials: true
 });
 
 // Add request interceptor to add token to all requests
@@ -52,12 +53,19 @@ export const checkServerHealth = async () => {
 
 export const register = async (userData) => {
   try {
-    const response = await api.post('/auth/register', userData);
+    console.log('Sending registration request with data:', userData);
+    const response = await api.post('/auth/register', userData, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    console.log('Registration response:', response.data);
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);
     }
     return response.data;
   } catch (error) {
+    console.error('Registration error:', error);
     throw error.response?.data || { message: 'Registration failed' };
   }
 };

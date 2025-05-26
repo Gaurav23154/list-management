@@ -36,10 +36,13 @@ const Register = () => {
 
     try {
       const { confirmPassword, ...registerData } = formData;
+      console.log('Submitting registration data:', registerData);
       const response = await register(registerData);
+      console.log('Registration successful:', response);
       setUser(response.user);
       navigate('/dashboard');
     } catch (err) {
+      console.error('Registration error:', err);
       setError(err.message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
