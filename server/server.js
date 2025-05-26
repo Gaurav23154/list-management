@@ -51,9 +51,12 @@ app.get('/', (req, res) => {
 app.use('/api/', limiter);
 
 // CORS configuration
-const allowedOrigins = process.env.NODE_ENV === 'production' 
-  ? [process.env.VITE_API_URL?.replace('/api', '')] 
-  : ['http://localhost:5173', 'http://127.0.0.1:5173'];
+const allowedOrigins = [
+  'http://13.51.150.158',
+  'http://13.51.150.158:5001',
+  'http://localhost:5173',
+  'http://127.0.0.1:5173'
+];
 
 app.use(cors({
   origin: function(origin, callback) {
