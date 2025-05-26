@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 // import authService from '../services/authService'; // No longer needed directly
 import { useAuth } from '../context/AuthContext.jsx'; // Import useAuth
 import './LoginPage.css';
@@ -91,7 +91,7 @@ const LoginPage = () => {
             {loading ? 'Logging in...' : 'Login'}
           </button>
           <p className="login-link">
-            Don't have an account? <a href="/signup">Sign up here</a>
+            Don't have an account? <Link to="/register">Sign up here</Link>
           </p>
         </form>
       </div>

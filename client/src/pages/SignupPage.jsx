@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { register } from '../services/authService';
 import './LoginPage.css'; // We can reuse the same styles
@@ -141,7 +141,7 @@ const SignupPage = () => {
             {loading ? 'Signing up...' : 'Sign Up'}
           </button>
           <p className="login-link">
-            Already have an account? <a href="/login">Login here</a>
+            Already have an account? <Link to="/login">Login here</Link>
           </p>
         </form>
       </div>
