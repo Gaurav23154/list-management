@@ -6,6 +6,7 @@ import AIInsights from './AIInsights';
 
 const Dashboard = () => {
   const { user } = useAuth();
+   
   const [stats, setStats] = useState({
     totalContacts: 0,
     totalAgents: 0,
