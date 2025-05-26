@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { getCurrentUser, isAuthenticated } from '../services/authService';
+import { getCurrentUser, isAuthenticated, login as authLogin } from '../services/authService';
 
 const AuthContext = createContext(null);
 
@@ -29,12 +29,24 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, []); // Empty dependency array to run only once on mount
 
+  const login = async (credentials) => {
+    try {
+      const response = await authLogin(credentials);
+      setUser(response.user);
+      return response;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    }
+  };
+
   const value = {
     user,
     setUser,
     loading,
     error,
-    isAuthenticated: !!user
+    isAuthenticated: !!user,
+    login
   };
 
   return (

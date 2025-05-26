@@ -24,7 +24,8 @@ const Register = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission
+    console.log('Form submitted, preventing default behavior');
     setError('');
 
     if (formData.password !== formData.confirmPassword) {
@@ -36,11 +37,15 @@ const Register = () => {
 
     try {
       const { confirmPassword, ...registerData } = formData;
-      console.log('Submitting registration data:', registerData);
+      console.log('Attempting to register with data:', registerData);
       const response = await register(registerData);
       console.log('Registration successful:', response);
-      setUser(response.user);
-      navigate('/dashboard');
+      if (response.user) {
+        setUser(response.user);
+        navigate('/dashboard');
+      } else {
+        throw new Error('No user data in response');
+      }
     } catch (err) {
       console.error('Registration error:', err);
       setError(err.message || 'Registration failed. Please try again.');
@@ -54,7 +59,7 @@ const Register = () => {
       <div className="register-box">
         <h2>Register</h2>
         {error && <div className="error-message">{error}</div>}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} method="POST">
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <input

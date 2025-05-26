@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://13.51.150.158:5001/api';
+const API_URL = 'http://13.51.150.158/api';
 
 // Create axios instance with default config
 const api = axios.create({
@@ -14,6 +14,11 @@ const api = axios.create({
 // Add request interceptor to add token to all requests
 api.interceptors.request.use(
   (config) => {
+    console.log('Making request:', {
+      method: config.method,
+      url: config.url,
+      data: config.data
+    });
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -21,16 +26,20 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
+    console.error('Request interceptor error:', error);
     return Promise.reject(error);
   }
 );
 
 // Add response interceptor to handle token expiration
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log('Response received:', response.data);
+    return response;
+  },
   (error) => {
+    console.error('Response error:', error.response?.data || error.message);
     if (error.response?.status === 401) {
-      // Clear token and redirect to login only if we're not already on the login page
       if (!window.location.pathname.includes('/login')) {
         localStorage.removeItem('token');
         window.location.href = '/login';
@@ -53,19 +62,15 @@ export const checkServerHealth = async () => {
 
 export const register = async (userData) => {
   try {
-    console.log('Sending registration request with data:', userData);
-    const response = await api.post('/auth/register', userData, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    console.log('Making registration request to:', `${API_URL}/auth/register`);
+    const response = await api.post('/auth/register', userData);
     console.log('Registration response:', response.data);
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);
     }
     return response.data;
   } catch (error) {
-    console.error('Registration error:', error);
+    console.error('Registration error:', error.response?.data || error.message);
     throw error.response?.data || { message: 'Registration failed' };
   }
 };
